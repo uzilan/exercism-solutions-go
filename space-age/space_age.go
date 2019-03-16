@@ -1,6 +1,7 @@
-// An solution to the space age exercise of the Go track in https://exercism.io
+// Package space provides a solution to the space age exercise of the Go track in https://exercism.io
 package space
 
+// Planet is a representation of a planet with a name
 type Planet string
 
 var earthOrbitalPeriod = 365.25
@@ -16,7 +17,7 @@ var orbitalPeriodMap = map[Planet]float64{
 	"Neptune": 164.79132,
 }
 
-// Given an age in seconds, calculate how old someone would be on different planets
+// Age calculate how old someone would be on different planets, given an age in seconds
 func Age(seconds float64, planet Planet) float64 {
 	return seconds / (orbitalPeriodMap[planet] * secondsInEarthYear)
 }

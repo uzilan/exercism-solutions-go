@@ -1,9 +1,9 @@
-// An solution to the two-fer exercise of the Go track in https://exercism.io
+// Package twofer provides a solution to the two-fer exercise of the Go track in https://exercism.io
 package twofer
 
 import "fmt"
 
-// return a line about sharing something with the given name.
+// ShareWith returns a line about sharing something with the given name.
 // If the name is empty, use "you" instead
 func ShareWith(name string) string {
 	var who = name
