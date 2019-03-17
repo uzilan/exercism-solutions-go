@@ -16,13 +16,14 @@ const (
 
 // KindFromSides determines if a triangle legal, or is equilateral, isosceles, or scalene
 func KindFromSides(a, b, c float64) Kind {
-	if !isLegalTriangle(a, b, c) {
+	switch {
+	case !isLegalTriangle(a, b, c):
 		return NaT
-	} else if a == b && b == c {
+	case a == b && b == c:
 		return Equ
-	} else if a != b && a != c && b != c {
+	case a != b && a != c && b != c:
 		return Sca
-	} else {
+	default:
 		return Iso
 	}
 }
