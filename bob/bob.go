@@ -1,8 +1,4 @@
-// This is a "stub" file.  It's a little start on your solution.
-// It's not a complete solution though; you have to write some code.
-
-// Package bob should have a package comment that summarizes what it's about.
-// https://golang.org/doc/effective_go.html#commentary
+// Package bob provides a solution to the bob exercise of the Go track in https://exercism.io
 package bob
 
 import (
@@ -10,7 +6,7 @@ import (
 	"strings"
 )
 
-// Hey should have a comment documenting it.
+// Hey returns an answer based on the input and some strange rules
 func Hey(remark string) string {
 	trimmed := strings.TrimSpace(remark)
 	switch {
