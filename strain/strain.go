@@ -1,3 +1,4 @@
+// Package strain provides a solution to the strain exercise of the Go track in https://exercism.io
 package strain
 
 // Ints is a list of integers
