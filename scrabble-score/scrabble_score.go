@@ -1,33 +1,28 @@
 // Package scrabble provides a solution to the scrabble score exercise of the Go track in https://exercism.io
 package scrabble
 
-import "strings"
-
-var letterScoreMap = map[rune]int{}
-
-func init() {
-	var scoreMap = map[string]int{
-		"AEIOULNRST": 1,
-		"DG":         2,
-		"BCMP":       3,
-		"FHVWY":      4,
-		"K":          5,
-		"JX":         8,
-		"QZ":         10,
-	}
-
-	for letters, score := range scoreMap {
-		for _, letter := range letters {
-			letterScoreMap[letter] = score
-		}
-	}
-}
+import "unicode"
 
 // Score calculates the scrabble score for a given string
 func Score(input string) int {
 	result := 0
-	for _, letter := range strings.ToUpper(input) {
-		result += letterScoreMap[letter]
+	for _, letter := range input {
+		switch unicode.ToUpper(letter) {
+		case 'A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T':
+			result++
+		case 'D', 'G':
+			result += 2
+		case 'B', 'C', 'M', 'P':
+			result += 3
+		case 'F', 'H', 'V', 'W', 'Y':
+			result += 4
+		case 'K':
+			result += 5
+		case 'J', 'X':
+			result += 8
+		case 'Q', 'Z':
+			result += 10
+		}
 	}
 	return result
 }
