@@ -8,15 +8,14 @@ func IsIsogram(input string) bool {
 	letterMap := map[rune]bool{}
 
 	for _, letter := range input {
-		lower := unicode.ToLower(letter)
-		switch {
-		case letter == ' ', letter == '-':
-			// do nothing
-		case letterMap[lower]:
-			return false
-		default:
-			letterMap[lower] = true
+		if letter == ' ' || letter == '-' {
+			continue
 		}
+		lower := unicode.ToLower(letter)
+		if letterMap[lower] {
+			return false
+		}
+		letterMap[lower] = true
 	}
 	return true
 }
