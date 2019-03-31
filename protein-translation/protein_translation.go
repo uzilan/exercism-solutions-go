@@ -1,45 +1,48 @@
 // Package protein provides a solution to the Protein Translation exercise of the Go track in https://exercism.io
 package protein
 
-// ErrStop ...
-var ErrStop error
+import "errors"
 
-// ErrInvalidBase ...
-var ErrInvalidBase error
+// ErrStop found a terminating codon
+var ErrStop = errors.New("ErrStop")
 
-// FromCodon translates RNA sequences into proteins.
-func FromCodon(input string) (string, error) {
-	protein := ""
-	for i := 0; i < len(input)/3; i += 3 {
-		protein += rnaToProtein(input[i*3 : i*3+3])
-	}
+// ErrInvalidBase found a wrong codon
+var ErrInvalidBase = errors.New("ErrInvalidBase")
 
-	return protein, nil
-}
-
-// FromRNA ...
-func FromRNA(input string) (string, error) {
-	return "", nil
-}
-
-func rnaToProtein(rna string) string {
-	switch rna {
+// FromCodon translates an RNA sequence into  a protein.
+func FromCodon(codon string) (string, error) {
+	switch codon {
 	case "AUG":
-		return "Methionine"
+		return "Methionine", nil
 	case "UUU", "UUC":
-		return "Phenylalanine"
+		return "Phenylalanine", nil
 	case "UUA", "UUG":
-		return "Leucine"
+		return "Leucine", nil
 	case "UCU", "UCC", "UCA", "UCG":
-		return "Serine"
+		return "Serine", nil
 	case "UAU", "UAC":
-		return "Tyrosine"
+		return "Tyrosine", nil
 	case "UGU", "UGC":
-		return "Cysteine"
+		return "Cysteine", nil
 	case "UGG":
-		return "Tryptophan"
+		return "Tryptophan", nil
 	case "UAA", "UAG", "UGA":
-		return "STOP"
+		return "", ErrStop
 	}
-	return ""
+	return "", ErrInvalidBase
+}
+
+// FromRNA translates RNA sequences into proteins.
+func FromRNA(input string) ([]string, error) {
+	var proteins []string
+	for i := 0; i <= len(input)-3; i += 3 {
+		protein, err := FromCodon(input[i : i+3])
+		if ErrStop == err {
+			return proteins, nil
+		} else if ErrInvalidBase == err {
+			return proteins, err
+		}
+		proteins = append(proteins, protein)
+	}
+	return proteins, nil
 }
