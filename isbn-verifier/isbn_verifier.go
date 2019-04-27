@@ -5,7 +5,7 @@ import "strings"
 
 // IsValidISBN checks if the provided string is a valid ISBN-10
 func IsValidISBN(input string) bool {
-	cleaned := strings.ReplaceAll(input, "-", "")
+	cleaned := strings.Replace(input, "-", "", -1)
 	if len(cleaned) != 10 {
 		return false
 	}
