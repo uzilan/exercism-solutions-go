@@ -35,13 +35,13 @@ func reverse(input string) string {
 
 func findRuneValue(index int, ru rune) int32 {
 	runeValue := ru - '0'
-	if (index+1)%2 == 0 {
-		multiplied := runeValue * 2
-		if multiplied > 9 {
-			multiplied -= 9
-		}
-		return multiplied
-	} else {
+	if (index+1)%2 != 0 {
 		return runeValue
 	}
+
+	multiplied := runeValue * 2
+	if multiplied > 9 {
+		multiplied -= 9
+	}
+	return multiplied
 }
