@@ -2,46 +2,35 @@
 package luhn
 
 import (
-	"regexp"
 	"strings"
 )
 
 // Valid returns true it given number is valid per the Luhn formula or false otherwise.
 func Valid(input string) bool {
-	noSpaces := strings.ReplaceAll(input, " ", "")
-	re := regexp.MustCompile(`[^0-9]`)
+	input = strings.ReplaceAll(input, " ", "")
 
-	if len(noSpaces) < 2 || re.MatchString(noSpaces) {
+	if len(input) < 2 {
 		return false
 	}
 
-	reversed := reverse(noSpaces)
-	sum := int32(0)
+	sum := 0
+	double := len(input)%2 == 0
 
-	for index, ru := range reversed {
-		sum += findRuneValue(index, ru)
+	for _, ru := range input {
+		runeValue := int(ru - '0')
+		if runeValue < 0 || runeValue > 9 {
+			return false
+		}
+
+		if double {
+			runeValue *= 2
+			if runeValue > 9 {
+				runeValue -= 9
+			}
+		}
+		sum += runeValue
+		double = !double
 	}
 
 	return sum%10 == 0
-}
-
-func reverse(input string) string {
-	reversed := ""
-	for _, ru := range input {
-		reversed = string(ru) + reversed
-	}
-	return reversed
-}
-
-func findRuneValue(index int, ru rune) int32 {
-	runeValue := ru - '0'
-	if (index+1)%2 != 0 {
-		return runeValue
-	}
-
-	multiplied := runeValue * 2
-	if multiplied > 9 {
-		multiplied -= 9
-	}
-	return multiplied
 }
