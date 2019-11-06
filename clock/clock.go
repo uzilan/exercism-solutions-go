@@ -38,28 +38,7 @@ func New(hours int, minutes int) Clock {
 
 // String returns a textual representation of the clock in format hh:mm
 func (clock Clock) String() string {
-	var hours string
-	var minutes string
-
-	switch h := clock.hours; {
-	case h == 0:
-		hours = "00"
-	case h < 10:
-		hours = fmt.Sprintf("0%v", clock.hours)
-	default:
-		hours = fmt.Sprintf("%v", clock.hours)
-	}
-
-	switch m := clock.minutes; {
-	case m == 0:
-		minutes = "00"
-	case m < 10:
-		minutes = fmt.Sprintf("0%v", clock.minutes)
-	default:
-		minutes = fmt.Sprintf("%v", clock.minutes)
-	}
-
-	return fmt.Sprintf("%v:%v", hours, minutes)
+	return fmt.Sprintf("%02d:%02d", clock.hours, clock.minutes)
 }
 
 // Add adds given minutes to the clock
